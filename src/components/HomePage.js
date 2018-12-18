@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
 
 class HomePage extends Component {
   render () {
 
     return (
-            <h1>Домашня сторінка</h1>
+      <h1>Домашня сторінка</h1>
     )
   }
 }

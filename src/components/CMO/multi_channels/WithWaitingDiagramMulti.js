@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import Diagram from "../../../components/Diagram";
 import SetParameters from "../../../components/SetParameters";
 
@@ -15,8 +14,7 @@ class WithWaitingDiagramMulti extends Component {
   }
 
   handleChangeM(numb) {
-      //let numb = parseInt(event.target.value);
-      this.setState({m: numb });
+    this.setState({m: numb });
   }
 
   handleChangeN(numb) {

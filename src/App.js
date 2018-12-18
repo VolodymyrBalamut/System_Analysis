@@ -17,7 +17,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <BrowserRouter>
           <div>
            <Header />
@@ -31,8 +30,6 @@ class App extends Component {
           </div>
         </BrowserRouter>
       </div>
-
-
     );
   }
 }
