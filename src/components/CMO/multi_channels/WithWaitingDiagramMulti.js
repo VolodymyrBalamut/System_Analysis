@@ -11,6 +11,8 @@ class WithWaitingDiagramMulti extends Component {
     };
     this.handleChangeM = this.handleChangeM.bind(this);
     this.handleChangeN = this.handleChangeN.bind(this);
+    this.handleChangeLamda = this.handleChangeLamda.bind(this);
+    this.handleChangeMu = this.handleChangeMu.bind(this);
   }
 
   handleChangeM(numb) {
@@ -21,17 +23,32 @@ class WithWaitingDiagramMulti extends Component {
    this.setState({n: numb });
   }
 
+  handleChangeLamda(value) {
+    this.setState({ lamda: value });
+  }
+
+  handleChangeMu(value) {
+    this.setState({ mu: value });
+  }
+
   render() {
-    const {m , n} = this.state
+    const { m , n, lamda, mu } = this.state
     return (
       <div className="container">
         <h2>{"Багатоканальна замкнена СМО з очікуванням"}</h2>
           <SetParameters handleChangeM ={this.handleChangeM.bind(this)}
                          handleChangeN ={this.handleChangeN.bind(this)}
+                         handleChangeLamda={this.handleChangeLamda.bind(this)}
+                         handleChangeMu={this.handleChangeMu.bind(this)}
                          m = {m}
-                         n = {n}  />
+                         n = {n}  
+                         lamda = {lamda}
+                         mu = {mu} />
 
-        <Diagram  m={m} n={n}/>
+        <Diagram  m={m}
+                  n={n}
+                  lamda = {lamda}
+                  mu = {mu}/>
       </div>
     );
   }
