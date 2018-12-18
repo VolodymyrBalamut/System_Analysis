@@ -1,35 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { render } from 'react-dom';
-import { Stage, Layer, Rect, Text, Arrow } from 'react-konva';
-import Konva from 'konva';
-
+import { Stage } from 'react-konva';
 import Rectangle from "./Rectangle"
 
 export default class Diagram extends Component {
-  constructor () {
-    super()
-    this.state = {
-
-    }
-  }
-
   render() {
-    const {m , n} = this.props
-    let count = m + n;
-    let startX = 50;
-    let array = [];
+    const { m , n, lamda, mu } = this.props;
+    const count = parseInt(m) + parseInt(n);
+    const startX = 50;
+    const array = [];
     let temp, indexMu;
-    for (var i = 0; i <= count; i++) {
+    for (let i = 0; i <= count; i++) {
       if(i === count) {
-        temp = <Rectangle width={50} x={startX + i*100} text={"P" + i} isArrow={false}/>;
+        temp = <Rectangle key = { i }
+                          width = { 50 }
+                          x = { startX + i * 100 }
+                          text = { "P" + i }
+                          isArrow = { false }/>;
       }
       else {
         indexMu = i + 1;
-        temp = <Rectangle width={50} x={startX + i*100} text={"P" + i}
-                lamdaText = {/*(m-i+1) +*/ "λ"}
-                muText = {indexMu+"μ"} />;
-      }
+        temp = <Rectangle key = { i }
+                          width = { 50 }
+                          x = { startX + i * 100 }
+                          text = { "P" + i }
+                          lamdaText = { lamda ? lamda : "λ" }
+                          muText = { mu ? mu * indexMu : indexMu+"μ" } />;
+      } 
       array.push(temp);
     }
     return (
@@ -40,12 +37,9 @@ export default class Diagram extends Component {
   }
 }
 
-// Set default props
 Diagram.defaultProps = {
     count: 5,
 };
-
-
 
 Diagram.propTypes = {
   count: PropTypes.number
