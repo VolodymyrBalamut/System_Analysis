@@ -20,10 +20,11 @@ class Header extends Component {
                 Вибір системи
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link className="dropdown-item" to='/withoutWaitingDiagramOne'>Одноканальна з відмовою</Link>
-                <Link className="dropdown-item" to='/withWaitingDiagramOne'>Одноканальна з очікуванням</Link>
-                <Link className="dropdown-item" to='/withoutWaitingDiagramMulti'>Багатоканальна з відмовою</Link>
-                <Link className="dropdown-item" to='/withWaitingDiagramMulti'>Багатоканальна з очікуванням</Link>
+                {/*<Link className="dropdown-item" to='/withoutWaitingDiagramOne'>Одноканальна з відмовою</Link>
+                <Link className="dropdown-item" to='/withWaitingDiagramOne'>Одноканальна з очікуванням</Link>*/}
+                <Link className="dropdown-item" to='/withoutWaitingDiagramMulti'>Багатоканальна розімкнута з відмовою</Link>
+                <Link className="dropdown-item" to='/withWaitingDiagramMulti'>Багатоканальна розімкнута з очікуванням</Link>
+                <Link className="dropdown-item" to='/withWaitingClosedDiagramMulti'>Багатоканальна замкнена з очікуванням</Link>
               </div>
             </li>
           </ul>

@@ -30,7 +30,7 @@ export default class SetParameters extends Component {
       type="number"
       value={this.props.n}
       className="form-control"
-      min="0"
+      min={this.props.minChannels}
       max="10"
       onChange={this.handleChangeN}
       disabled={disabled}
@@ -101,5 +101,6 @@ export default class SetParameters extends Component {
 
 SetParameters.defaultProps = {
     isMulti: true,
-    isChain: true
+    isChain: true,
+    minChannels: 1
 };

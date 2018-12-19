@@ -9,6 +9,8 @@ class WithoutWaitingDiagram extends Component {
     this.state = {
       m: 0,
       n: 1,
+      mu: 3,
+      lamda: 15
     };
     this.handleChangeM = this.handleChangeM.bind(this);
     this.handleChangeN = this.handleChangeN.bind(this);
@@ -33,10 +35,11 @@ class WithoutWaitingDiagram extends Component {
   }
 
   render() {
-    const {m , n, lamda, mu} = this.state
+    const {m , n, lamda, mu} = this.state;
+    let serveTime = (1/mu).toFixed(3);
     return (
       <div className="container">
-      <h2>{"Одноканальна замкнена СМО з відмовою"}</h2>
+      <h2>{"Одноканальна розімкнута СМО з відмовою"}</h2>
       <SetParameters handleChangeM = {this.handleChangeM.bind(this)}
                      handleChangeN = {this.handleChangeN.bind(this)}
                      handleChangeLamda = {this.handleChangeLamda.bind(this)}
@@ -48,7 +51,13 @@ class WithoutWaitingDiagram extends Component {
                      isChain = {false}
                      isMulti = {false}  />
 
-        <Diagram m={m} n={n} lamda={lamda} mu={mu}/>
+        <Diagram m={m} n={n} lamda={lamda} mu={mu} minChannels="1"/>
+
+        <div className="row">
+          <div className="col-4">
+            <p>Час обслуговування: t<sub>об</sub> = {serveTime} хв.</p>
+          </div>
+        </div>
       </div>
     );
   }

@@ -3,7 +3,7 @@ import Diagram from "../../../components/Diagram";
 import SetParameters from "../../../components/SetParameters";
 import ProbabilityEquation from "../../../components/ProbabilityEquation";
 
-class WithWaitingDiagramMulti extends Component {
+class WithWaitingClosedDiagramMulti extends Component {
   constructor () {
     super()
     this.state = {
@@ -56,8 +56,9 @@ class WithWaitingDiagramMulti extends Component {
   updateIndexesLamda() {
     let temp = [];
     let count = this.state.n + this.state.m;
-    for (var i = 0; i <= count + 2; i++) {
-       temp.push(1);
+    while(count != 0){
+      temp.push(count);
+      count--;
     }
     this.setState({ indexesLamda: temp });
   }
@@ -77,7 +78,7 @@ class WithWaitingDiagramMulti extends Component {
     console.log(indexesMu);
     return (
       <div className="container">
-        <h2>{"Багатоканальна розімкнута СМО з очікуванням"}</h2>
+        <h2>{"Багатоканальна замкнена СМО з очікуванням"}</h2>
           <SetParameters handleChangeM ={this.handleChangeM.bind(this)}
                          handleChangeN ={this.handleChangeN.bind(this)}
                          handleChangeLamda={this.handleChangeLamda.bind(this)}
@@ -92,7 +93,7 @@ class WithWaitingDiagramMulti extends Component {
                   n={n}
                   lamda = {lamda}
                   mu = {mu}
-                  indexesMu = {indexesMu} isArrowEnd = {true} indexesLamda = {indexesLamda}/>
+                  indexesMu = {indexesMu} indexesLamda = {indexesLamda}/>
 
                   <div className="row">
                     <div className="col-4">
@@ -115,4 +116,4 @@ class WithWaitingDiagramMulti extends Component {
   }
 }
 
-export default WithWaitingDiagramMulti;
+export default WithWaitingClosedDiagramMulti;

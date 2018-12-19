@@ -5,13 +5,14 @@ import Rectangle from "./Rectangle"
 
 export default class Diagram extends Component {
   render() {
-    const { m , n, lamda, mu } = this.props;
+    const { m , n, lamda, mu, indexesMu, indexesLamda, isArrowEnd } = this.props;
     const count = parseInt(m) + parseInt(n);
     const startX = 50;
     const array = [];
-    let temp, indexMu;
+    let temp, indexMu, indexLamda;
+    console.log(indexesLamda);
     for (let i = 0; i <= count; i++) {
-      if(i === count) {
+      if(i === count && !isArrowEnd) {
         temp = <Rectangle key = { i }
                           width = { 50 }
                           x = { startX + i * 100 }
@@ -20,13 +21,14 @@ export default class Diagram extends Component {
       }
       else {
         indexMu = i + 1;
+        indexLamda = i;
         temp = <Rectangle key = { i }
                           width = { 50 }
                           x = { startX + i * 100 }
                           text = { "P" + i }
-                          lamdaText = { lamda ? lamda : "λ" }
-                          muText = { mu ? mu * indexMu : indexMu+"μ" } />;
-      } 
+                          lamdaText = { lamda ? (lamda * indexesLamda[indexLamda]) : "λ" }
+                          muText = { mu ? (mu * this.props.indexesMu[indexMu]) : (indexMu+"μ") } />;
+      }
       array.push(temp);
     }
     return (
@@ -39,8 +41,13 @@ export default class Diagram extends Component {
 
 Diagram.defaultProps = {
     count: 5,
+    indexesMu: [0,1,2,2,2,2,2],
+    indexesLamda: [1,1,1,1,1,1],
+    isArrowEnd:false
 };
 
 Diagram.propTypes = {
-  count: PropTypes.number
+  count: PropTypes.number,
+  indexesMu: PropTypes.array,
+  indexesLamda: PropTypes.array,
 };
