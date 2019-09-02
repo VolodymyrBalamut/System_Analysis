@@ -10,6 +10,8 @@ import WithWaitingDiagramMulti from "./components/CMO/multi_channels/WithWaiting
 import WithWaitingClosedDiagramMulti from "./components/CMO/multi_channels/WithWaitingClosedDiagramMulti";
 import WithoutWaitingDiagramMulti from "./components/CMO/multi_channels/WithoutWaitingDiagramMulti";
 
+import DynamicTable from "./components/MEO/DynamicTable";
+
 import HomePage from "./components/HomePage";
 import Header from "./components/Header";
 
@@ -18,16 +20,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <BrowserRouter>
+        <BrowserRouter basename={'/test'}>
           <div>
            <Header />
             <Switch>
-              <Route exact path='/' component={HomePage} />
-              <Route path='/withoutWaitingDiagramOne' component={WithoutWaitingDiagram} />
-              <Route path='/withWaitingDiagramOne' component={WithWaitingDiagram} />
-              <Route path='/withoutWaitingDiagramMulti' component={WithoutWaitingDiagramMulti} />
-              <Route path='/withWaitingDiagramMulti' component={WithWaitingDiagramMulti} />
-              <Route path='/withWaitingClosedDiagramMulti' component={WithWaitingClosedDiagramMulti} />
+              <Route exact path={`${process.env.PUBLIC_URL}/`} component={HomePage} />
+              <Route path={`${process.env.PUBLIC_URL}/withoutWaitingDiagramOne`} component={WithoutWaitingDiagram} />
+              <Route path={`${process.env.PUBLIC_URL}/withWaitingDiagramOne`} component={WithWaitingDiagram} />
+              <Route path={`${process.env.PUBLIC_URL}/withoutWaitingDiagramMulti`} component={WithoutWaitingDiagramMulti} />
+              <Route path={`${process.env.PUBLIC_URL}/withWaitingDiagramMulti`} component={WithWaitingDiagramMulti} />
+              <Route path={`${process.env.PUBLIC_URL}/withWaitingClosedDiagramMulti`} component={WithWaitingClosedDiagramMulti} />
+              <Route path={`${process.env.PUBLIC_URL}/MEO`} component={DynamicTable} />
             </Switch>
           </div>
         </BrowserRouter>
