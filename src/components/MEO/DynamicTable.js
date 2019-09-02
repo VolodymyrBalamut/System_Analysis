@@ -15,7 +15,7 @@ class DynamicTable extends Component {
            [2, 6, 9, 7, 8, 8],
            [1, 5, 10, 7, 8, 8],
            [2, 6, 9, 7, 8, 8],
-         ],
+         ]
       };
 
    }
@@ -122,17 +122,21 @@ class DynamicTable extends Component {
    }
 
    renderResult() {
-     let result = this.compute();
-     return result.map((data, index) => {
-       return {name: index, value: data}
+     let myresult = this.compute();
+     return myresult.map((data, index) => {
+       return {name: ++index, value: data}
      }).sort((a, b) => (a.value > b.value) ? 1 : -1).reverse().map((data, index) => {
        return <h4>X{data.name}: {data.value}</h4>
      });
+
    }
+
+
 
    render() { //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
      //console.log(this.state.arrayM);
      console.log(this.compute());
+
      return (
        <div>
                <h1 id='title'>React Dynamic Table</h1>
