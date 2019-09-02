@@ -106,16 +106,24 @@ class DynamicTable extends Component {
 
    compute(){
      const tempArray = this.state.arrayM;
-     const expertsCount = this.state.colCount;
+     const expertsCount = this.state.rowCount;
      let result = [];
+     let sumRows = [];
      let temp = 0;
 
+     sumRows = tempArray.map((row, index) => {
+       return row.reduce((sum, current) => {
+         return sum + current;
+       }, 0)
+     });
+
+     //console.dir(sumRows);
      for (var i = 0; i < tempArray[0].length; i++) {
        temp = 0;
        for (var j = 0; j < tempArray.length; j++) {
-         temp += tempArray[j][i];
+         temp += tempArray[j][i] / sumRows[j];
        }
-       result.push(Number(temp/expertsCount).toFixed(1));
+       result.push(Number(temp/expertsCount).toFixed(2));
      }
 
      return result;
