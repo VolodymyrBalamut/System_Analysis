@@ -11,6 +11,9 @@ import WithWaitingClosedDiagramMulti from "./components/CMO/multi_channels/WithW
 import WithoutWaitingDiagramMulti from "./components/CMO/multi_channels/WithoutWaitingDiagramMulti";
 
 import DynamicTable from "./components/MEO/DynamicTable";
+import DynamicTable2 from "./components/MEO/DynamicTable2";
+import Lab2 from "./components/MEO/Lab2";
+import Lab3 from "./components/MEO/Lab3";
 
 import HomePage from "./components/HomePage";
 import Header from "./components/Header";
@@ -31,6 +34,9 @@ class App extends Component {
               <Route path={`${process.env.PUBLIC_URL}/withWaitingDiagramMulti`} component={WithWaitingDiagramMulti} />
               <Route path={`${process.env.PUBLIC_URL}/withWaitingClosedDiagramMulti`} component={WithWaitingClosedDiagramMulti} />
               <Route path={`${process.env.PUBLIC_URL}/MEO`} component={DynamicTable} />
+              <Route path={`${process.env.PUBLIC_URL}/Lab2`} component={Lab2} />
+              <Route path={`${process.env.PUBLIC_URL}/Lab3`} component={Lab3} />
+              <Route path={`${process.env.PUBLIC_URL}/MEO2`} component={DynamicTable2} />
             </Switch>
           </div>
         </BrowserRouter>

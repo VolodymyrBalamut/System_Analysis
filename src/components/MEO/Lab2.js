@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ChangeCount from './ChangeCount'
 
-class DynamicTable extends Component {
+class Lab2 extends Component {
 
   constructor() {
       super() //since we are extending class Table so we have to use super in order to override Component class constructor
@@ -9,8 +9,8 @@ class DynamicTable extends Component {
          rowCount: 6,
          colCount: 6,
          arrayM: [
-           [1, 5, 10, 7, 8, 8],
-           [2, 6, 9, 7, 8, 8],
+           [1, 2, 10, 7, 8, 8],
+           [3, 4, 9, 7, 8, 8],
            [1, 5, 10, 7, 8, 8],
            [2, 6, 9, 7, 8, 8],
            [1, 5, 10, 7, 8, 8],
@@ -19,8 +19,6 @@ class DynamicTable extends Component {
       };
 
    }
-
-
 
    //count of experts
    handleChangeRowCount(numb) {
@@ -76,7 +74,7 @@ class DynamicTable extends Component {
       let header = [];
       for (var i = 0; i < this.state.colCount; i++) {
         let temp = i + 1;
-        header.push(<th key={i}>Альтернатива {temp}</th>)
+        header.push(<th key={i}>Стан {temp}</th>)
       }
       return header;
    }
@@ -118,17 +116,130 @@ class DynamicTable extends Component {
 
    renderTableWithExperts() {
      let arr = this.renderTable();
-     console.log(arr)
+     //console.log(arr)
      return arr
      /*return arr.map((row, index) => {
        row.unshift(<td key={index}>Експерт {++index}</td>);
        return row;
      })*/
    }
-   wald(){
+   gurvitz(){
+     const tempArray = this.state.arrayM;
+     console.dir(tempArray);
+     const expertsCount = this.state.rowCount;
+     const a = 0.6;
+     let result = [];
+     let maxj = [];
+     let minj = [];
+     // yi = maxi(a*maxj(aij) + (1-a)minj(aij))
+     for (var i = 0; i < tempArray.length; i++) {
+       let temp = [];
+       for (var j = 0; j < tempArray[0].length; j++) {
+         temp.push(tempArray[i][j]);
+       }
+       maxj.push(Math.max.apply(null,temp));
+       minj.push(Math.min.apply(null,temp));
+       result[i] = Number(a * maxj[i] + (1 - a) * minj[i]).toFixed(2);
+     }
+     /*console.dir(maxj);
+     console.dir(minj);
+     console.dir(result);
+     console.dir(Math.max.apply(null, result));*/
+     return { total: Math.max.apply(null, result), array: result}
 
    }
 
+   wald() {
+    const tempArray = this.state.arrayM;
+    let minj = [];
+
+    for(var i = 0; i < tempArray.length; i++)
+    {
+        let temp = [];
+        for(var j = 0; j < tempArray[i].length; j++)
+        {
+            temp.push(tempArray[i][j]);
+        }
+        minj.push(Math.min.apply(null, temp));
+
+    }
+    return { total:Math.max.apply(null, minj), array:minj};
+  }
+
+  minmax() {
+    const tempArray = this.state.arrayM;
+    let maxj = [];
+
+    for(var i = 0; i < tempArray.length; i++)
+    {
+        let temp = [];
+        for(var j = 0; j < tempArray[i].length; j++)
+        {
+            temp.push(tempArray[i][j]);
+        }
+        maxj.push(Math.max.apply(null, temp));
+
+    }
+    return {total:Math.min.apply(null, maxj), array: maxj};
+}
+
+  laplas(){
+    const tempArray = this.state.arrayM;
+    let result = [];
+    let len = tempArray.length;
+    for(var i = 0; i < len; i++)
+    {
+        let sum = 0;
+        for(var j = 0; j < tempArray[i].length; j++)
+        {
+            //temp.push(tempArray[j][i]);
+            sum += tempArray[i][j] / len;
+        }
+        result.push(Number(sum).toFixed(2));
+    }
+    return {total:Math.max.apply(null, result), array: result};
+  }
+
+  savage(){
+    const tempArray = this.state.arrayM;
+    let reg = [];
+    let result = [];
+    let maxj = [];
+
+    for(var i = 0; i < tempArray.length; i++)
+    {
+        let temp = [];
+        for(var j = 0; j < tempArray[i].length; j++)
+        {
+            temp.push(tempArray[j][i]);
+        }
+
+        maxj.push(Math.max.apply(null, temp));
+
+    }
+
+    for(var i = 0; i < tempArray.length; i++)
+    {
+        let temp = [];
+        for(var j = 0; j < tempArray[i].length; j++)
+        {
+            temp.push(maxj[i] - tempArray[j][i]);
+        }
+        reg.push(temp);
+    }
+
+    for(var i = 0; i < reg.length; i++)
+    {
+        let temp = [];
+        for(var j = 0; j < reg[i].length; j++)
+        {
+            temp.push(reg[j][i]);
+        }
+        result.push(Math.max.apply(null, temp));
+    }
+    return {total:Math.min.apply(null, result), array:result}
+
+}
    compute(){
      const tempArray = this.state.arrayM;
      const expertsCount = this.state.rowCount;
@@ -164,22 +275,25 @@ class DynamicTable extends Component {
 
    }
 
+   getMaxOfArray(numArray) {
+     return Math.max.apply(null, numArray);
+   }
 
 
    render() { //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
      //console.log(this.state.arrayM);
-     console.log(this.compute());
-
+     //console.log(this.compute());
+     console.log(this.gurvitz());
      return (
        <div>
-               <h1 id='title'>Практична робота 1</h1>
+               <h1 id='title'>Практична робота 2</h1>
                <div className="row">
                  <ChangeCount handleChangeCount ={this.handleChangeRowCount.bind(this)}
                                  count = {this.state.rowCount}
-                                 title = "Число експертів = "/>
+                                 title = "Число варіантів рішень = "/>
                  <ChangeCount handleChangeCount ={this.handleChangeColCount.bind(this)}
                                  count = {this.state.colCount}
-                                 title = "Число альтернатив = "/>
+                                 title = "Число станів = "/>
                </div>
                <table id='students'>
                   <tbody>
@@ -189,13 +303,30 @@ class DynamicTable extends Component {
                   </tbody>
                </table>
                <h1>Результати:</h1>
-               <>
-                {this.renderResult()}
-               </>
+               <p>
+                {" Критерій Гурвіца: " + this.gurvitz().total +
+                   " [ " + this.gurvitz().array.map((num, index) => "Стан " + (++index) +" = " + num + "  ") + "]"}
+               </p>
+               <p>
+                {" Критерій Вальда: " + this.wald().total +
+                   " [ " + this.wald().array.map((num, index) => "Стан " + (++index) +" = " + num + "  ") + "]"}
+               </p>
+               <p>
+                {" Критерій Minmax: " + this.minmax().total +
+                   " [ " + this.minmax().array.map((num, index) => "Стан " + (++index) +" = " + num + "  ") + "]"}
+               </p>
+               <p>
+                {" Критерій Лапласа: " + this.laplas().total +
+                   " [ " + this.laplas().array.map((num, index) => "Стан " + (++index) +" = " + num + "  ") + "]"}
+               </p>
+               <p>
+                {" Критерій Севіджа: " + this.savage().total +
+                   " [ " + this.savage().array.map((num, index) => "Стан " + (++index) +" = " + num + "  ") + "]"}
+               </p>
 
       </div>
      );
    }
 }
 
-export default DynamicTable
+export default Lab2
