@@ -9,12 +9,12 @@ class Lab3 extends Component {
          rowCount: 6,
          colCount: 6,
          arrayM: [
-           [1, 5, 10, 7, 8, 8],
-           [2, 6, 9, 7, 8, 8],
-           [1, 5, 10, 7, 8, 8],
-           [2, 6, 9, 7, 8, 8],
-           [1, 5, 10, 7, 8, 8],
-           [2, 6, 9, 7, 8, 8],
+           [1, 2, 3, 4, 1, 3],
+           [2, 3, 4, 5, 1, 4],
+           [3, 4, 5, 6, 1, 5],
+           [4, 5, 6, 1, 2, 6],
+           [5, 1, 1, 2, 3, 1],
+           [6, 6, 2, 3, 4, 2],
          ]
       };
 
@@ -76,7 +76,7 @@ class Lab3 extends Component {
       let header = [];
       for (var i = 0; i < this.state.colCount; i++) {
         let temp = i + 1;
-        header.push(<th key={i}>Альтернатива {temp}</th>)
+        header.push(<th key={i}>Стан {temp}</th>)
       }
       return header;
    }
@@ -148,7 +148,13 @@ class Lab3 extends Component {
        let tempArr = [];
        tempArr.push(rowLabel[i]);
        for (var j = 0; j < this.state.colCount; j++) {
-         let compare = this.rowCompare(temp[i], temp[j]) == 1 ? 1 : '';
+         let compare = 0;
+         if(i != j) {
+           compare = this.rowCompare(temp[j], temp[i]) == 1 ? 1 : '';
+         }
+         else {
+           compare = '';
+         }
          tempArr.push(compare);
        }
        result.push(tempArr);
@@ -167,26 +173,39 @@ class Lab3 extends Component {
    findOptimal() {
      let result = [];
      let temp = this.state.arrayM;
+     console.log(temp);
      let str = "{ ";
      for (var i = 0; i < this.state.colCount; i++) {
        let tempArr = [];
        for (var j = 0; j < this.state.colCount; j++) {
-         let compare = this.rowCompare(temp[i], temp[j]) == 1 ? 1 : '';
+         let compare = 0;
+         if(i != j){
+           compare = this.rowCompare(temp[i], temp[j]) == 1 ? 1 : '';
+         }
+         else {
+           compare = '';
+         }
+
          tempArr.push(compare);
        }
        result.push(tempArr);
      }
-
+     console.dir(result)
+     let comma = false;
      for (var i = 0; i < result.length; i++) {
-       let flag = true;
+       let flag = false;
+
        for (var j = 0; j < result[0].length; j++) {
-         flag = result[j][i] == 1 ? false : true;
-         if(!flag) break;
+         flag = result[i][j] == 1 ? true : false;
+         if(flag) break;
        }
        if(!flag) {
-         if(i > 1)
-          str += ", "
-         str += "y" + i;
+         if(comma) {
+           str += ", ";
+         }
+         comma = true;
+         let temp = i + 1;
+         str += "y" + temp;
        }
      }
 
@@ -194,27 +213,31 @@ class Lab3 extends Component {
      return str;
    }
    rowCompare(row1, row2) {
-     let temp = 0;
+     let plus = 0;
+     let minus = 0;
      for (var i = 0; i < this.state.colCount; i++) {
-       if(row1[i] > row2[i]) temp--;
-       else if(row1[i] < row2[i]) temp++;
+       if(row1[i] >= row2[i]) minus++;
+       //else if(row1[i] < row2[i]) plus++;
      }
-     return temp;
+     if(minus == this.state.colCount)
+      return 1;
+    else
+      return 0;
    }
 
    render() { //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
 
-
+      console.log(this.rowCompare([1,2,3,4,1,3], [2,3,4,5,1,4] ));
      return (
        <div>
                <h1 id='title'>Практична робота 3 (Парето)</h1>
                <div className="row">
                  <ChangeCount handleChangeCount ={this.handleChangeRowCount.bind(this)}
                                  count = {this.state.rowCount}
-                                 title = "Число експертів = "/>
+                                 title = "Число варіантів рішень = "/>
                  <ChangeCount handleChangeCount ={this.handleChangeColCount.bind(this)}
                                  count = {this.state.colCount}
-                                 title = "Число альтернатив = "/>
+                                 title = "Число станів = "/>
                </div>
                <table id='students'>
                   <tbody>
@@ -223,7 +246,7 @@ class Lab3 extends Component {
 
                   </tbody>
                </table>
-               <h1>Результати: {this.findOptimal()}</h1>
+               <h1>Множина Парето: {this.findOptimal()}</h1>
                <table id='students'>
                   <tbody>
                     {this.renderTableResultHeader()}
